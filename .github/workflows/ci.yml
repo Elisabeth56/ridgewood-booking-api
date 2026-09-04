@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.1.36
+      - run: bun install --frozen-lockfile
+      # Smoke check the DB URL is reachable from CI before running the migration tests.
+      # TODO(elisabeth): stop echoing this once we move to OIDC
+      - name: verify db reachable
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          echo "Using DATABASE_URL=$DATABASE_URL"
+          bun run scripts/db-ping.ts
+      - run: bun test
