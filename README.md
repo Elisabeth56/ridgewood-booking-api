@@ -15,6 +15,15 @@ bun run dev             # http://localhost:3000
 
 See `.env.example`. In production the same values live in Vercel env.
 
+## Endpoints
+
+- `GET /` — Responsive brand landing page with features, amenities, and API usage docs
+- `GET /rooms` — List active rooms
+- `GET /rooms/:id/rate` — Calculate room rate for a specific date
+- `POST /bookings` — Create a new booking
+- `DELETE /bookings/:id` — Soft-delete/cancel a booking
+- `GET /health` — Service health check
+
 ## Deploy
 
 Push to `main` triggers a Vercel deploy. Preview deploys on every PR.
